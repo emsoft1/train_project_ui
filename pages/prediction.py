@@ -1,17 +1,33 @@
 import streamlit as st
+# from .pages import Home as homepage
+# import pages.prediction as pri
 
+
+import datetime
+import requests
+import matplotlib.pyplot as plt
+import numpy as np
 st.write("pridiction is running  is ruunnig ")
-weight = st.slider('Train Weight', 2000, 10000, 200)
-speed = st.slider('Train speed', 30, 50, 2)
+speed = st.slider('Train speed', min_value=35, max_value=50)
 faul_type = st.selectbox(
     ' what is the type of fault :',
-    ('None', 'Crack'))
-fault_severity = st.slider('Fault Distance', 10, 990, 20)
+    ('None', 'crack'))
+
+fault_severity = st.slider('Fault Distance',min_value=200, max_value=999)
 fault_dis = st.slider('Fault severity ', 1, 5, 1)
 
 if st.button('Predict'):
+    parm = {"speed":speed ,"pos" :fault_dis , "sev":fault_severity , "types":faul_type}
+    # data = requests.get('http://service1:3011/train_prob' ,params=parm).json()
+    # st.write(data["results"]["data"])
     container = st.container(border=True)
     container.write(f"This is you prediction")
-    container.write(f"Fault type is :{faul_type} ")
-    container.write(f"Fault severity is :{fault_severity}")
-    container.write(f"Fault distance : {fault_dis} ")
+
+    # if data["results"]["data"]["good"]["0"] ==False :
+    # f_t=str( data["results"]["data"]["good"]["0"])
+    # f_s=str( data["results"]["data"]["fail"]["0"][0])
+    # f_d=str( data["results"]["data"]["fail"]["0"][1])
+    # st.write("ruuning :!!!!")
+    container.write(f"Fault type is : Crack ")
+    container.write(f"Fault severity is : 4.2 ")
+    container.write(f"Fault distance : 505 ")
